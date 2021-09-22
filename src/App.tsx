@@ -4,25 +4,7 @@ import Header from './components/Header';
 import Table from './components/Table';
 import { UserDto } from './dto/UserDto';
 import scheduleService from './service/ScheduleService';
-
-const WhatsAppIcon: React.FC = () => {
-  const message = encodeURIComponent(
-    'Você está disponível para trabalhar hoje?'
-  );
-  return (
-    <a
-      href={`https://wa.me/+5531993662423?text=${message}`}
-      target="_blank"
-      rel="noreferrer"
-    >
-      <img
-        className="transform scale-50 m-0 -ml-3 object-none self-start"
-        src="https://img.icons8.com/fluency/48/000000/whatsapp.png"
-        alt="whatsapp icon"
-      />
-    </a>
-  );
-};
+import WhatsAppLink from './components/WhatsAppLink';
 
 interface Schedule {
   date: DateTime;
@@ -72,7 +54,7 @@ const App: React.FC = () => {
 
   const tableEntries = scheduledUsers.map(({ date, user }) => ({
     key: formatDate(date),
-    value: user ? user.name : <WhatsAppIcon />,
+    value: user ? user.name : <WhatsAppLink />,
   }));
 
   return (
