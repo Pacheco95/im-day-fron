@@ -2,7 +2,7 @@ import React from 'react';
 
 interface TableRowItem {
   key: string | number;
-  value: string | number;
+  value: JSX.Element | string;
 }
 
 interface TableProps {
@@ -24,12 +24,14 @@ const Table: React.FC<TableProps> = ({ title, subtitle, data }: TableProps) => (
         {data.map(({ key, value }, index) => (
           <div
             key={key}
-            className={`flex ${
+            className={`flex px-4 h-8 sm:h-11 md:h-12 sm:px-6 ${
               index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-            } px-4 py-5 grid-cols-2 sm:px-6`}
+            }`}
           >
-            <dt className="flex-1 text-sm font-medium text-gray-500">{key}</dt>
-            <dd className="flex-1 mt-1 text-sm text-gray-900 sm:mt-0">
+            <dt className="flex flex-col justify-center flex-1 text-sm font-medium text-gray-500">
+              {key}
+            </dt>
+            <dd className="flex flex-col justify-center flex-1 text-sm text-gray-900">
               {value}
             </dd>
           </div>
