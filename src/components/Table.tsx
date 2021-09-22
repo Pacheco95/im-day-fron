@@ -23,6 +23,7 @@ const Table: React.FC<TableProps> = ({ title, subtitle, data }: TableProps) => (
       <dl>
         {data.map(({ key, value }, index) => (
           <div
+            role="row"
             key={key}
             className={`flex px-4 h-8 sm:h-11 md:h-12 sm:px-6 ${
               index % 2 === 0 ? 'bg-gray-50' : 'bg-white'

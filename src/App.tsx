@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import Header from './components/Header';
 import Table from './components/Table';
@@ -13,20 +13,18 @@ interface Schedule {
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-const locale = { locale: 'pt-BR' };
-
 const formatDate = (date: DateTime): string => {
   const diffInHours = Math.abs(DateTime.local().diff(date, ['hours']).hours);
 
   let prefix: string;
 
   if (diffInHours < 25) {
-    prefix = date.toRelativeCalendar(locale) || '';
+    prefix = date.toRelativeCalendar() || '';
   } else {
-    [prefix] = date.toFormat('EEEE', locale).split('-') || [''];
+    [prefix] = date.toFormat('EEEE').split('-') || [''];
   }
 
-  const suffix = date.toFormat('(dd/MM)', locale);
+  const suffix = date.toFormat('(dd/MM)');
 
   return capitalize(`${prefix} ${suffix}`);
 };
@@ -37,18 +35,18 @@ const isWeekend = (dateTime: DateTime) =>
 const App: React.FC = () => {
   const [scheduledUsers, setScheduledUsers] = useState<Schedule[]>([]);
 
-  const processResponse = useCallback((users: (UserDto | null)[]) => {
-    const yesterday = DateTime.local().minus({ days: 1 });
-
-    const schedules = users.map<Schedule>((user, index) => ({
-      date: yesterday.plus({ days: index }),
-      user,
-    }));
-
-    setScheduledUsers(schedules);
-  }, []);
-
   useEffect(() => {
+    const processResponse = (users: (UserDto | null)[]) => {
+      const yesterday = DateTime.local().minus({ days: 1 });
+
+      const schedules = users.map<Schedule>((user, index) => ({
+        date: yesterday.plus({ days: index }),
+        user,
+      }));
+
+      setScheduledUsers(schedules);
+    };
+
     scheduleService
       .get<(UserDto | null)[]>('im-day')
       .then(({ data }) => data)

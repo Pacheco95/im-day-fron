@@ -34,7 +34,8 @@
             "ts": "never",
             "tsx": "never"
         }],
-        "no-nested-ternary": "off"
+        "no-nested-ternary": "off",
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/*.test.tsx"]}]
     },
     "settings": {
         "import/resolver": {
