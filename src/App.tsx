@@ -57,7 +57,13 @@ const App: React.FC = () => {
 
   const tableEntries = scheduledUsers.map(({ date, user }) => ({
     key: formatDate(date),
-    value: user ? user.name : isWeekend(date) ? <WhatsAppLink /> : '\u2015',
+    value: user ? (
+      user.name
+    ) : isWeekend(date) ? (
+      <WhatsAppLink date={date} />
+    ) : (
+      '\u2015'
+    ),
   }));
 
   return (
