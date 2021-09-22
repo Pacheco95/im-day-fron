@@ -69,7 +69,7 @@ const App: React.FC = () => {
   return (
     <>
       <Header />
-      <main className="px-2 md:w-4/5 xl:w-3/4 mt-12 m-auto">
+      <main className="px-2 md:w-3/5 xl:w-2/3 mt-12 m-auto">
         <Table
           data={tableEntries}
           title="IMs PP - Quem resolve?"
