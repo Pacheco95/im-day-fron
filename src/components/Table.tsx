@@ -28,10 +28,11 @@ const Table: React.FC<TableProps> = ({ title, subtitle, data }: TableProps) => (
               index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
             }`}
           >
-            <dt className="flex flex-col justify-center flex-1 text-sm font-medium text-gray-500">
+            <dt className="flex whitespace-nowrap flex-col justify-center flex-1 text-sm font-medium text-gray-500">
               {key}
             </dt>
-            <dd className="flex flex-col justify-center flex-1 text-sm text-gray-900">
+            <div className="flex-auto" />
+            <dd className="flex w-1/5 sm:w-1/4 lg:w-1/3 flex-col justify-center text-sm text-gray-900">
               {value}
             </dd>
           </div>
