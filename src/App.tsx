@@ -31,6 +31,9 @@ const formatDate = (date: DateTime): string => {
   return capitalize(`${prefix} ${suffix}`);
 };
 
+const isWeekend = (dateTime: DateTime) =>
+  [6, 7].includes(dateTime.get('weekday'));
+
 const App: React.FC = () => {
   const [scheduledUsers, setScheduledUsers] = useState<Schedule[]>([]);
 
@@ -54,7 +57,7 @@ const App: React.FC = () => {
 
   const tableEntries = scheduledUsers.map(({ date, user }) => ({
     key: formatDate(date),
-    value: user ? user.name : <WhatsAppLink />,
+    value: user ? user.name : isWeekend(date) ? <WhatsAppLink /> : '\u2015',
   }));
 
   return (

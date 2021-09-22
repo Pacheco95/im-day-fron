@@ -33,7 +33,8 @@
             "jsx": "never",
             "ts": "never",
             "tsx": "never"
-        }]
+        }],
+        "no-nested-ternary": "off"
     },
     "settings": {
         "import/resolver": {
