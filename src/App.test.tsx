@@ -25,30 +25,36 @@ it('should call api on component mount only', () => {
   });
 });
 
-it('should should list scheduled users', async () => {
+it('should list scheduled users', async () => {
   const totalDays = 11;
 
-  jest.spyOn(scheduleService, 'get').mockImplementationOnce(() => {
-    const now = DateTime.now();
+  const yesterday = DateTime.now().minus({ days: 1 });
 
-    const response: (UserDto | null)[] = [...Array(totalDays).keys()].map(
-      (index) => {
-        const date = now.plus({ days: 1 });
+  const dateRange = [...Array(totalDays).keys()].map((index) =>
+    yesterday.plus({ days: index })
+  );
 
-        const shouldBeNull = index % 4 === 0 || isWeekend(date);
+  const response: (UserDto | null)[] = dateRange.map((date, index) => {
+    const shouldBeNull = index % 4 === 0 || isWeekend(date);
 
-        return shouldBeNull ? null : { id: index, name: `User ${index}` };
-      }
-    );
-
-    return Promise.resolve({
-      data: response,
-    });
+    return shouldBeNull ? null : { id: index, name: `User ${index}` };
   });
 
-  const { getAllByRole } = render(<App />);
+  jest.spyOn(scheduleService, 'get').mockReturnValueOnce(
+    Promise.resolve({
+      data: response,
+    })
+  );
+
+  const weekendsCount = dateRange.filter(isWeekend).length;
+
+  const { getAllByRole, getAllByAltText } = render(<App />);
 
   const tableEntries = await waitFor(() => getAllByRole('row'));
+  const whatsappIconsCount = await waitFor(() =>
+    getAllByAltText(/whatsapp icon/)
+  );
 
   expect(tableEntries.length).toBe(totalDays);
+  expect(whatsappIconsCount.length).toBe(weekendsCount);
 });
