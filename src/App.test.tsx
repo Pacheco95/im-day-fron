@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 import App from './App';
 
 import scheduleService from './service/ScheduleService';
-import { isWeekend } from './utils/utils';
+import { getDateRange, isWeekend } from './utils/utils';
 import { UserDto } from './dto/UserDto';
 
 describe('App', () => {
@@ -31,9 +31,7 @@ describe('App', () => {
 
     const yesterday = DateTime.now().minus({ days: 1 });
 
-    const dateRange = [...Array(totalDays).keys()].map((index) =>
-      yesterday.plus({ days: index })
-    );
+    const dateRange = getDateRange(yesterday, 11);
 
     const response: (UserDto | null)[] = dateRange.map((date, index) => {
       const shouldBeNull = index % 4 === 0 || isWeekend(date);

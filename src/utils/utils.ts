@@ -21,3 +21,12 @@ export const formatDate = (date: DateTime): string => {
 
   return capitalize(`${prefix} ${suffix}`);
 };
+
+export const getDateRange = (
+  startDate: DateTime,
+  nDays: number
+): DateTime[] => {
+  return [...Array(nDays).keys()].map((index) =>
+    startDate.plus({ days: index })
+  );
+};
