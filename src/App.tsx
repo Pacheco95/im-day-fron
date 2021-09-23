@@ -2,21 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import Header from './components/Header';
 import Table from './components/Table';
-import { UserDto } from './dto/UserDto';
-import scheduleService from './service/ScheduleService';
+import scheduleService, { MaybeUser } from './service/ScheduleService';
 import WhatsAppLink from './components/WhatsAppLink';
 import { formatDate, isWeekend } from './utils/utils';
 
 interface Schedule {
   date: DateTime;
-  user: UserDto | null;
+  user: MaybeUser;
 }
 
 const App = (): JSX.Element => {
   const [scheduledUsers, setScheduledUsers] = useState<Schedule[]>([]);
 
   useEffect(() => {
-    const processResponse = (users: (UserDto | null)[]) => {
+    const processResponse = (users: MaybeUser[]) => {
       const yesterday = DateTime.local().minus({ days: 1 });
 
       const schedules = users.map<Schedule>((user, index) => ({
@@ -27,10 +26,7 @@ const App = (): JSX.Element => {
       setScheduledUsers(schedules);
     };
 
-    scheduleService
-      .get<(UserDto | null)[]>('im-day')
-      .then(({ data }) => data)
-      .then(processResponse);
+    scheduleService.getRecentScheduledUsers().then(processResponse);
   }, []);
 
   const tableEntries = scheduledUsers.map(({ date, user }) => ({
