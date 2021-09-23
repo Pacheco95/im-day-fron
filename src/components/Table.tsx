@@ -1,17 +1,21 @@
 import React from 'react';
 
-interface TableRowItem {
+export interface TableRowItem {
   key: string | number;
   value: JSX.Element | string;
 }
 
-interface TableProps {
+export interface TableProps {
   title: string;
   subtitle?: string;
   data: Readonly<TableRowItem[]>;
 }
 
-const Table: React.FC<TableProps> = ({ title, subtitle, data }: TableProps) => (
+const Table: React.FC<TableProps> = ({
+  title,
+  subtitle = '',
+  data,
+}: TableProps) => (
   <div className="bg-white shadow-lg overflow-hidden md:rounded-lg">
     <div className="px-4 py-5 sm:px-6">
       <h3 className="text-lg leading-6 font-medium text-gray-900">{title}</h3>
@@ -42,9 +46,5 @@ const Table: React.FC<TableProps> = ({ title, subtitle, data }: TableProps) => (
     </div>
   </div>
 );
-
-Table.defaultProps = {
-  subtitle: '',
-};
 
 export default Table;
