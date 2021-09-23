@@ -11,11 +11,7 @@ export interface TableProps {
   data: Readonly<TableRowItem[]>;
 }
 
-const Table: React.FC<TableProps> = ({
-  title,
-  subtitle = '',
-  data,
-}: TableProps) => (
+const Table = ({ title, subtitle = '', data }: TableProps): JSX.Element => (
   <div className="bg-white shadow-lg overflow-hidden md:rounded-lg">
     <div className="px-4 py-5 sm:px-6">
       <h3 className="text-lg leading-6 font-medium text-gray-900">{title}</h3>

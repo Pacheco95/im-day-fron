@@ -12,7 +12,7 @@ interface Schedule {
   user: UserDto | null;
 }
 
-const App: React.FC = () => {
+const App = (): JSX.Element => {
   const [scheduledUsers, setScheduledUsers] = useState<Schedule[]>([]);
 
   useEffect(() => {

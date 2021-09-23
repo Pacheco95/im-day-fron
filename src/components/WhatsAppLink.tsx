@@ -5,7 +5,7 @@ interface WhatsAppLinkProps {
   date: DateTime;
 }
 
-const WhatsAppLink: React.FC<WhatsAppLinkProps> = ({ date }) => {
+const WhatsAppLink = ({ date }: WhatsAppLinkProps): JSX.Element => {
   const dateStr = date.toFormat('dd/MM (EEEE)');
   const message = `Olá! Você está disponível para trabalhar no dia ${dateStr}?`;
 
