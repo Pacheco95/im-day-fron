@@ -5,32 +5,12 @@ import Table from './components/Table';
 import { UserDto } from './dto/UserDto';
 import scheduleService from './service/ScheduleService';
 import WhatsAppLink from './components/WhatsAppLink';
+import { formatDate, isWeekend } from './utils/utils';
 
 interface Schedule {
   date: DateTime;
   user: UserDto | null;
 }
-
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-
-const formatDate = (date: DateTime): string => {
-  const diffInHours = Math.abs(DateTime.local().diff(date, ['hours']).hours);
-
-  let prefix: string;
-
-  if (diffInHours < 25) {
-    prefix = date.toRelativeCalendar() || '';
-  } else {
-    [prefix] = date.toFormat('EEEE').split('-') || [''];
-  }
-
-  const suffix = date.toFormat('(dd/MM)');
-
-  return capitalize(`${prefix} ${suffix}`);
-};
-
-const isWeekend = (dateTime: DateTime) =>
-  [6, 7].includes(dateTime.get('weekday'));
 
 const App: React.FC = () => {
   const [scheduledUsers, setScheduledUsers] = useState<Schedule[]>([]);
